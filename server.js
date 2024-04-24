@@ -18,3 +18,19 @@ connection.connect((err) => {
     // start the application
     start();
 });
+
+// Function to start the application of CFONT 
+cfonts.say('Angels Workshop \nSQL Employee Tracker', {
+	font: 'block',              
+	align: 'left',              
+	colors: ['blue'],        
+	background: 'transparent', 
+	letterSpacing: 1,           
+	lineHeight: 1,             
+	space: true,               
+	maxLength: '0',             
+	gradient: false,           
+	independentGradient: false, 
+	transitionGradient: false,  
+	env: 'node'                
+});
