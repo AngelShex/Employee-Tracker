@@ -519,3 +519,39 @@ function deleteDepartmentsRolesEmployees() {
         });
 }
 
+// Function to DELETE Employees
+function deleteEmployee() {
+    const query = "SELECT * FROM employee";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        const employeeList = res.map((employee) => ({
+            name: `${employee.first_name} ${employee.last_name}`,
+            value: employee.id,
+        }));
+        employeeList.push({ name: "Go Back", value: "back" }); // add a "back" option
+        inquirer
+            .prompt({
+                type: "list",
+                name: "id",
+                message: "Select the employee you want to delete:",
+                choices: employeeList,
+            })
+            .then((answer) => {
+                if (answer.id === "back") {
+                    // check if user selected "back"
+                    deleteDepartmentsRolesEmployees();
+                    return;
+                }
+                const query = "DELETE FROM employee WHERE id = ?";
+                connection.query(query, [answer.id], (err, res) => {
+                    if (err) throw err;
+                    console.log(
+                        `Deleted employee with ID ${answer.id} from the database!`
+                        
+                    );
+                    // restart the application
+                    start();
+                });
+            });
+    });
+}
