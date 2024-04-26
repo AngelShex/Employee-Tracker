@@ -594,3 +594,48 @@ function deleteRole() {
             });
     });
 }
+
+// Fuction to DELETE Department
+function deleteDepartment() {
+    // get the list of departments
+    const query = "SELECT * FROM departments";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        const departmentChoices = res.map((department) => ({
+            name: department.department_name,
+            value: department.id,
+        }));
+
+        // prompt the user to select a department
+        inquirer
+            .prompt({
+                type: "list",
+                name: "departmentId",
+                message: "Which department do you want to delete?",
+                choices: [
+                    ...departmentChoices,
+                    { name: "Go Back", value: "back" },
+                ],
+            })
+            .then((answer) => {
+                if (answer.departmentId === "back") {
+                    // go back to the previous menu
+                    deleteDepartmentsRolesEmployees();
+                } else {
+                    const query = "DELETE FROM departments WHERE id = ?";
+                    connection.query(
+                        query,
+                        [answer.departmentId],
+                        (err, res) => {
+                            if (err) throw err;
+                            console.log(
+                                `Deleted department with ID ${answer.departmentId} from the database!`
+                            );
+                            // restart the application
+                            start();
+                        }
+                    );
+                }
+            });
+    });
+}
