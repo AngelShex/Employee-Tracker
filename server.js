@@ -490,3 +490,32 @@ function viewEmployeesByDepartment() {
         start();
     });
 }
+
+// Function to DELETE Departments Roles Employees
+function deleteDepartmentsRolesEmployees() {
+    inquirer
+        .prompt({
+            type: "list",
+            name: "data",
+            message: "What would you like to delete?",
+            choices: ["Employee", "Role", "Department"],
+        })
+        .then((answer) => {
+            switch (answer.data) {
+                case "Employee":
+                    deleteEmployee();
+                    break;
+                case "Role":
+                    deleteRole();
+                    break;
+                case "Department":
+                    deleteDepartment();
+                    break;
+                default:
+                    console.log(`Invalid data: ${answer.data}`);
+                    start();
+                    break;
+            }
+        });
+}
+
