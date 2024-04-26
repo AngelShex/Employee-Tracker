@@ -685,3 +685,8 @@ function viewTotalUtilizedBudgetOfDepartment() {
             });
     });
 }
+
+// close the connection when the application exits
+process.on("exit", () => {
+    connection.end();
+});
