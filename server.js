@@ -476,3 +476,17 @@ function viewEmployeesByManager() {
          start();
         });
     }
+
+    // Function to view Employees by Department
+function viewEmployeesByDepartment() {
+    const query =
+        "SELECT departments.department_name, employee.first_name, employee.last_name FROM employee INNER JOIN roles ON employee.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id ORDER BY departments.department_name ASC";
+
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        console.log("\nEmployees by department:");
+        console.table(res);
+        // restart the application
+        start();
+    });
+}
