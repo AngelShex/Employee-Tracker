@@ -18,24 +18,23 @@ connection.connect((err) => {
     // start the application
     start();
 });
-
 // Function to start the application of CFONT 
-cfonts.say('Angels Workshop \nSQL Employee Tracker', {
-	font: 'block',              
-	align: 'left',              
-	colors: ['blue'],        
-	background: 'transparent', 
-	letterSpacing: 1,           
-	lineHeight: 1,             
-	space: true,               
-	maxLength: '0',             
-	gradient: false,           
-	independentGradient: false, 
-	transitionGradient: false,  
-	env: 'node'                
+cfonts.say('Angel & Friends \nSQL Employee Tracker', {
+	font: 'block',              // define the font face
+	align: 'left',              // define text alignment
+	colors: ['blue'],         // define all colors
+	background: 'transparent',  // define the background color, you can also use `backgroundColor` here as key
+	letterSpacing: 1,           // define letter spacing
+	lineHeight: 1,              // define the line height
+	space: true,                // define if the output text should have empty lines on top and on the bottom
+	maxLength: '0',             // define how many character can be on one line
+	gradient: false,            // define your two gradient colors
+	independentGradient: false, // define if you want to recalculate the gradient for each new line
+	transitionGradient: false,  // define if this is a transition between colors directly
+	env: 'node'                 // define the environment cfonts is being executed in
 });
 
-// Function to start Angels Workshop Employee Tracker 
+// Function to Start Angel SQL Employee Tracker Application
 function start() {
     inquirer
         .prompt({
@@ -298,7 +297,6 @@ function addEmployee() {
         );
     });
 }
-
 // Function to add a Manager
 function addManager() {
     const queryDepartments = "SELECT * FROM departments";
@@ -426,6 +424,8 @@ function updateEmployeeRole() {
     });
 }
 
+// Remember: iPad forced push to origin main deleted local stash that fixed bonus question for salary summary
+// Function to View Employee By Manager
 function viewEmployeesByManager() {
     const query = `
       SELECT 
@@ -449,8 +449,8 @@ function viewEmployeesByManager() {
     connection.query(query, (err, res) => {
         if (err) throw err;
 
-         // group employees by manager
-         const employeesByManager = res.reduce((acc, cur) => {
+        // group employees by manager
+        const employeesByManager = res.reduce((acc, cur) => {
             const managerName = cur.manager_name;
             if (acc[managerName]) {
                 acc[managerName].push(cur);
@@ -472,12 +472,11 @@ function viewEmployeesByManager() {
             });
         }
 
-         // restart the application
-         start();
-        });
-    }
-
-    // Function to view Employees by Department
+        // restart the application
+        start();
+    });
+}
+// Function to view Employees by Department
 function viewEmployeesByDepartment() {
     const query =
         "SELECT departments.department_name, employee.first_name, employee.last_name FROM employee INNER JOIN roles ON employee.role_id = roles.id INNER JOIN departments ON roles.department_id = departments.id ORDER BY departments.department_name ASC";
@@ -490,7 +489,6 @@ function viewEmployeesByDepartment() {
         start();
     });
 }
-
 // Function to DELETE Departments Roles Employees
 function deleteDepartmentsRolesEmployees() {
     inquirer
@@ -518,7 +516,6 @@ function deleteDepartmentsRolesEmployees() {
             }
         });
 }
-
 // Function to DELETE Employees
 function deleteEmployee() {
     const query = "SELECT * FROM employee";
@@ -555,7 +552,6 @@ function deleteEmployee() {
             });
     });
 }
-
 // Function to DELETE ROLE
 function deleteRole() {
     // retrieve all available roles from the database
@@ -594,7 +590,6 @@ function deleteRole() {
             });
     });
 }
-
 // Fuction to DELETE Department
 function deleteDepartment() {
     // get the list of departments
@@ -639,7 +634,6 @@ function deleteDepartment() {
             });
     });
 }
-
 // Function to view Total Utilized Budget of Department
 function viewTotalUtilizedBudgetOfDepartment() {
     const query = "SELECT * FROM departments";
